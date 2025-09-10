@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>自計化 × TKC 学習ツール｜松本会計 r1</title>
+<title>自計化 × TKC 学習ツール｜松本会計 r3</title>
 <style>
   :root{
     --brand:#578899; /* 松本会計 基調色 */
@@ -64,7 +64,7 @@
     <header class="header">
       <div class="logo">MK</div>
       <div>
-        <h1>自計化 × TKC 学習ツール <span class="pill">r1</span></h1>
+        <h1>自計化 × TKC 学習ツール <span class="pill">r3</span></h1>
         <div class="subtitle">「クリックして学ぶ」— 記帳代行志向・他社システム志向の方へ、松本会計の考え方を対話形式でご紹介します。</div>
       </div>
     </header>
@@ -254,6 +254,59 @@
     </section>
 
     <!-- Section: summary / CTA -->
+    <!-- Section: 継続MAS（新設） -->
+    <section id="mas" class="section card">
+      <h2>継続MAS：未来から逆算する経営計画（簡易デモ付き）</h2>
+      <p>継続MASは、<b>経営者と会計事務所の対話</b>から「あるべき未来像」を定め、<b>年次・月次の計画値</b>を会計ソフトに落とし込み、<b>実績と比較し続ける</b>“経営のペースメーカー”です。</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe885481aa2a4c5b58e1.png" alt="過去・現在・未来の3視点（制度会計／変動損益／継続MAS）">
+          <ul>
+            <li>「過去（制度会計）」「現在（変動損益）」「未来（継続MAS）」の<b>3視点で経営</b></li>
+            <li>年間計画→月次計画に<b>ブレークダウン</b>し、<b>実績と差異</b>を毎月レビュー</li>
+            <li>差異要因に応じて、<b>値上げ・販促・コスト・稼働</b>などの打ち手を調整</li>
+          </ul>
+          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe88568ee7f85fd66586.png" alt="継続MAS：計画と実績の見える化（当月比較のイメージ）">
+        </div>
+        <div class="card">
+          <h3>継続MAS 簡易デモ</h3>
+          <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px">
+            <label>年間売上計画（円）<br><input id="mas_plan_sales" type="number" value="36000000" min="0" step="10000" oninput="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+            <label>限界利益率（%）<br><input id="mas_plan_cm" type="range" min="30" max="85" step="0.1" value="62.2" oninput="buildMasPlan()" style="width:100%"></label>
+            <label>年間固定費（円）<br><input id="mas_plan_fixed" type="number" value="18000000" min="0" step="10000" oninput="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+            <label>配賦パターン<br>
+              <select id="mas_pattern" onchange="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px">
+                <option value="even">均等（12分割）</option>
+                <option value="season">繁忙・閑散あり</option>
+              </select>
+            </label>
+          </div>
+          <div class="row mini" style="margin:8px 0"><span class="muted">現在の限界利益率：</span><b id="mas_cm_disp">62.2%</b></div>
+          <table class="table" style="margin-top:6px">
+            <thead><tr><th>月</th><th>売上（計画）</th><th>限界利益（計画）</th><th>固定費（月割）</th><th>経常利益（計画）</th></tr></thead>
+            <tbody id="mas_plan_tbody"></tbody>
+          </table>
+          <div class="card" style="margin-top:10px">
+            <h4 style="margin:0 0 6px 0">今月の実績入力</h4>
+            <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px">
+              <label>対象月（1-12）<br><input id="mas_act_month" type="number" min="1" max="12" value="5" oninput="updateMasDemo()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+              <label>売上実績（円）<br><input id="mas_act_sales" type="number" min="0" step="10000" value="3000000" oninput="updateMasDemo()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+            </div>
+            <div class="row mini" style="margin-top:8px"><span class="muted">前提：変動費は売上に連動（限界利益率は計画と同じ）</span></div>
+            <table class="table" style="margin-top:6px">
+              <thead><tr><th></th><th>売上</th><th>限界利益</th><th>固定費</th><th>経常利益</th></tr></thead>
+              <tbody id="mas_demo_tbody"></tbody>
+            </table>
+            <div id="mas_msg" class="note"></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <a class="btn" href="https://takatrp.github.io/hendou_PL/" target="_blank" rel="noopener">ボールで学ぶ変動損益計算書</a>
+            <button class="btn" onclick="next('summary')">次へ →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="summary" class="section card">
       <h2>まとめ</h2>
       <div class="grid cols-2">
@@ -279,7 +332,7 @@
         <a href=\"https://www.matsumoto-kaikei.or.jp/software\" target=\"_blank\" rel=\"noopener\">TKCシステムのメリット<\/a> ／
         <a href=\"https://takatrp.github.io/hendou_PL/\" target=\"_blank\" rel=\"noopener\">ボールで学ぶ変動損益計算書<\/a>
       </div>
-      <div>© 松本会計 r1 — このツールは社内デモ用の試作版です。数値は例示であり、最終判断は専門家による個別助言に基づきます。</div>
+      <div>© 松本会計 r3 — このツールは社内デモ用の試作版です。数値は例示であり、最終判断は専門家による個別助言に基づきます。</div>
     </footer>
   </div>
 
@@ -301,7 +354,7 @@
   function next(id){ show(id); progress(id); buildSummary(); }
   function show(id){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
   function progress(id){
-    const order = ['welcome','realtime','automation','vc','roles','compare','summary'];
+    const order = ['welcome','realtime','automation','vc','roles','compare','mas','summary'];
     const idx = Math.max(1, order.indexOf(id)+1);
     document.getElementById('bar').style.width = (idx/order.length*100)+'%';
   }
@@ -372,6 +425,63 @@
     try{ document.execCommand('copy'); }catch(e){}
     sel.removeAllRanges();
     alert('内容をコピーしました');
+  }
+
+  // 継続MAS：計画表を生成
+  function buildMasPlan(){
+    const salesY = Number(document.getElementById('mas_plan_sales').value||0);
+    const cmRate = Number(document.getElementById('mas_plan_cm').value||0)/100;
+    const fixedY = Number(document.getElementById('mas_plan_fixed').value||0);
+    const cmDisp = document.getElementById('mas_cm_disp');
+    if(cmDisp){ cmDisp.textContent = (cmRate*100).toFixed(1)+'%'; }
+    const patternEl = document.getElementById('mas_pattern');
+    if(!patternEl){ return; }
+    const pattern = patternEl.value;
+    const weights = pattern==='season' ? [0.06,0.07,0.08,0.10,0.11,0.10,0.08,0.06,0.07,0.10,0.09,0.08] : Array(12).fill(1/12);
+    const sumW = weights.reduce((a,b)=>a+b,0);
+    const w = weights.map(v=>v/sumW);
+    const fixedM = fixedY/12;
+    const tbody = document.getElementById('mas_plan_tbody');
+    if(!tbody){ return; }
+    tbody.innerHTML = '';
+    const plan = [];
+    for(let m=1;m<=12;m++){
+      const s = Math.round(salesY * w[m-1]);
+      const cm = Math.round(s*cmRate);
+      const pr = Math.round(cm - fixedM);
+      plan.push({m,s,cm,fixed:Math.round(fixedM),pr});
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${m}月</td><td>${fmtY(s)}</td><td>${fmtY(cm)}</td><td>${fmtY(fixedM)}</td><td>${fmtY(pr)}</td>`;
+      tbody.appendChild(tr);
+    }
+    window.__masPlan = plan;
+    updateMasDemo();
+  }
+
+  // 継続MAS：実績との比較
+  function updateMasDemo(){
+    const plan = window.__masPlan || [];
+    const monthEl = document.getElementById('mas_act_month');
+    const salesEl = document.getElementById('mas_act_sales');
+    const tbody = document.getElementById('mas_demo_tbody');
+    const msgEl = document.getElementById('mas_msg');
+    if(!monthEl || !salesEl || !tbody){ return; }
+    const idx = Math.max(1, Math.min(12, Number(monthEl.value||1))) - 1;
+    const salesAct = Math.max(0, Number(salesEl.value||0));
+    const cmRate = Number(document.getElementById('mas_plan_cm').value||0)/100;
+    const fixed = plan[idx] ? plan[idx].fixed : 0;
+    const cmAct = Math.round(salesAct*cmRate);
+    const prAct = Math.round(cmAct - fixed);
+    const p = plan[idx] || {s:0,cm:0,pr:0,fixed:fixed};
+    tbody.innerHTML = '';
+    const row = (label,a,b,c,d)=>`<tr><td>${label}</td><td>${fmtY(a)}</td><td>${fmtY(b)}</td><td>${fmtY(c)}</td><td>${fmtY(d)}</td></tr>`;
+    tbody.insertAdjacentHTML('beforeend', row('計画', p.s, p.cm, p.fixed, p.pr));
+    tbody.insertAdjacentHTML('beforeend', row('実績', salesAct, cmAct, fixed, prAct));
+    if(msgEl){
+      const dvS = salesAct - p.s;
+      const dvP = prAct - p.pr;
+      msgEl.textContent = dvP>=0 ? `◎ 計画比 ${fmtY(dvP)} 上振れ（売上差 ${fmtY(dvS)}）。この調子で進めましょう。` : `△ 計画比 ${fmtY(dvP)} 下振れ（売上差 ${fmtY(dvS)}）。単価・数量・固定費の観点で是正策を検討。`;
+    }
   }
 
   // init
