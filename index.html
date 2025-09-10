@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自計化 × TKC 学習ツール｜松本会計 r1</title>
+<style>
+  :root{
+    --brand:#578899; /* 松本会計 基調色 */
+    --brand-dark:#466d77;
+    --ink:#0f172a; /* slate-900 */
+    --muted:#6b7280; /* gray-500 */
+    --bg:#f8fafc; /* slate-50 */
+    --card:#ffffff;
+  }
+  html,body{height:100%;}
+  body{
+    margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    color:var(--ink); background:var(--bg);
+  }
+  .container{max-width:1000px; margin:0 auto; padding:16px;}
+  .header{display:flex; align-items:center; gap:12px; padding:16px;}
+  .logo{width:36px; height:36px; border-radius:8px; background:var(--brand); display:grid; place-items:center; color:#fff; font-weight:700;}
+  h1{font-size:clamp(20px, 3.2vw, 30px); margin:0;}
+  .subtitle{color:var(--muted); margin-top:4px;}
+  .card{background:var(--card); border-radius:16px; box-shadow:0 4px 18px rgba(0,0,0,.08); padding:18px;}
+  .grid{display:grid; gap:16px;}
+  .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr));}
+  @media (max-width: 820px){ .grid.cols-2{grid-template-columns:1fr;} }
+  .btn{appearance:none; border:1px solid #cbd5e1; background:#fff; color:var(--ink); padding:12px 16px; border-radius:12px; font-weight:600; cursor:pointer; transition:.15s ease-in-out;}
+  .btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(0,0,0,.08)}
+  .btn:disabled{opacity:.6; cursor:not-allowed;}
+  .btn-primary{background:var(--brand); color:#fff; border-color:transparent;}
+  .btn-ghost{background:transparent; border-color:transparent; color:var(--brand);}
+  .pill{display:inline-block; padding:6px 10px; border-radius:999px; background:#e2e8f0; color:#0f172a; font-size:12px; font-weight:700;}
+  .accent{color:var(--brand)}
+  .kpi{display:flex; align-items:baseline; gap:8px;}
+  .kpi .big{font-size:28px; font-weight:800;}
+  .muted{color:var(--muted)}
+  .section{display:none; animation:fade .25s ease}
+  .section.active{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
+  .progress{height:6px; background:#e2e8f0; border-radius:999px; overflow:hidden}
+  .progress > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--brand), var(--brand-dark)); transition:width .25s ease}
+  .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .mini{font-size:12px}
+  .switch{position:relative; width:48px; height:28px}
+  .switch input{display:none}
+  .track{position:absolute; inset:0; background:#e5e7eb; border-radius:999px; transition:.2s}
+  .thumb{position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.2); transition:.2s}
+  .switch input:checked + .track{background:var(--brand)}
+  .switch input:checked + .track .thumb{transform:translateX(20px)}
+  .table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px}
+  .table th, .table td{padding:12px; border-bottom:1px solid #e5e7eb; text-align:left;}
+  .table tr:last-child td{border-bottom:none}
+  .note{font-size:12px; color:var(--muted)}
+  .footer{padding:24px 12px; color:var(--muted); font-size:12px}
+  .tag{background:#eef2ff; color:#3730a3; border:1px solid #c7d2fe; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:700}
+  .copy{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#0b1220; color:#d1e9ff; padding:12px; border-radius:12px; overflow:auto}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">MK</div>
+      <div>
+        <h1>自計化 × TKC 学習ツール <span class="pill">r1</span></h1>
+        <div class="subtitle">「クリックして学ぶ」— 記帳代行志向・他社システム志向の方へ、松本会計の考え方を対話形式でご紹介します。</div>
+      </div>
+    </header>
+
+    <div class="card" style="margin-bottom:12px">
+      <div class="progress"><i id="bar" style="width:5%"></i></div>
+    </div>
+
+    <!-- Section: welcome -->
+    <section id="welcome" class="section active card">
+      <div class="grid cols-2">
+        <div>
+          <h2>まずは教えてください</h2>
+          <p class="muted">今のお気持ちに近い方を選ぶと、最適なストーリーでご案内します。</p>
+          <div class="row">
+            <button class="btn btn-primary" onclick="setPersona('記帳代行派')">記帳代行を希望している</button>
+            <button class="btn" onclick="setPersona('他社派')">他社システムを使いたい</button>
+          </div>
+          <p class="note" style="margin-top:10px">※ どちらを選んでも内容は全て見られます。導入の押し売りではなく、<span class="accent">黒字経営の実現</span>を最優先に考えた設計です。</p>
+          <div style="margin-top:16px">
+            <button class="btn" onclick="next('realtime')">飛ばしてはじめる →</button>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="background:linear-gradient(180deg,#f1f5f9,#fff)">
+            <h3>このツールで分かること</h3>
+            <ul>
+              <li>なぜ「リアルタイムの数字」が行動を変えるのか</li>
+              <li>自動化の仕組み（銀行/信販データ、証憑AI）と到達できる水準</li>
+              <li>変動損益計算書で「今やるべきこと」を数値化する方法</li>
+              <li>会社と会計事務所の役割分担（70点→100点）</li>
+              <li>TKCでの実現例と、次の一歩</li>
+            </ul>
+            <div class="note">出典リンクは最下部にまとめています。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: realtime check -->
+    <section id="realtime" class="section card">
+      <h2>リアルタイム性チェック</h2>
+      <p>月次の試算表（粗利や費用の推移）を、<b>何日遅れ</b>で見ていますか？</p>
+      <div class="row">
+        <input id="delay" type="range" min="0" max="120" step="1" value="30" oninput="updateDelay(this.value)" style="width:240px">
+        <div class="kpi"><span class="big" id="delayDays">30</span><span>日遅れ</span></div>
+      </div>
+      <p id="realtimeMsg" class="muted" style="margin-top:8px"></p>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="next('automation')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('welcome')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: automation -->
+    <section id="automation" class="section card">
+      <h2>自動化できるところから始めましょう</h2>
+      <p class="muted">チェックを入れると推定自動化率が上がります（例示）。</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <label class="row"><span class="tag">入力の自動化</span></label>
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <div class="row mini"><b>銀行・信販データ受信</b></div>
+              <div class="note">銀行/カード明細を自動取込</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="bankCk" onchange="updateAuto()"><span class="track"><i class="thumb"></i></span>
+            </label>
+          </div>
+          <div class="row" style="justify-content:space-between; margin-top:12px">
+            <div>
+              <div class="row mini"><b>証憑保存（AI読取・仕訳）</b></div>
+              <div class="note">レシート/請求書のOCR→仕訳候補</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="ocrCk" onchange="updateAuto()"><span class="track"><i class="thumb"></i></span>
+            </label>
+          </div>
+          <div class="row" style="justify-content:space-between; margin-top:12px">
+            <div>
+              <div class="row mini"><b>販売・給与・請求の連携</b></div>
+              <div class="note">主要台帳と会計の自動連係</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="salesCk" onchange="updateAuto()"><span class="track"><i class="thumb"></i></span>
+            </label>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi"><span class="big" id="autoPct">50%</span><span> 推定自動化率</span></div>
+          <p class="muted mini">※ 業種によりますが、<b>最大で約90%程度の自動化も可能</b>（当事務所のご案内より）。完璧でなくても傾向把握には十分、という前提でOKです。</p>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="next('vc')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('realtime')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: variable costing simulator -->
+    <section id="vc" class="section card">
+      <h2>変動損益 計算ミニツール</h2>
+      <p>固定費が増えるとき、<b>追加で必要な売上高</b>はいくら？（管理会計の基本）</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <label>追加固定費（例：人件費）<br><input id="fixed" type="number" value="300000" min="0" step="1000" oninput="calcVC()" style="width:100%; padding:10px; border-radius:10px; border:1px solid #cbd5e1"></label>
+          <div style="height:8px"></div>
+          <label>限界利益率（%）<br><input id="cmrate" type="range" min="30" max="85" step="0.1" value="62.2" oninput="calcVC()" style="width:100%"></label>
+          <div class="row mini"><span class="muted">現在値：</span><b id="cmDisp">62.2%</b></div>
+          <div style="height:8px"></div>
+          <label>平均単価（任意）<br><input id="unit" type="number" value="10000" min="1" step="100" oninput="calcVC()" style="width:100%; padding:10px; border-radius:10px; border:1px solid #cbd5e1"></label>
+        </div>
+        <div class="card">
+          <div class="kpi"><span class="big" id="needSales">—</span><span>/ 月 の追加売上が必要</span></div>
+          <div class="row mini"><span class="muted">＝ 一日あたり</span><b id="perDay">—</b><span class="muted"> / 25営業日</span></div>
+          <div class="row mini"><span class="muted">＝ 必要販売数/日：</span><b id="unitsPerDay">—</b></div>
+          <div class="note" style="margin-top:8px">例：固定費30万円、限界利益率62.2% → 482,315円/月（単価1万円なら約2件/日）</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="next('roles')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('automation')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: roles -->
+    <section id="roles" class="section card">
+      <h2>役割分担：70点→100点の設計</h2>
+      <div class="grid cols-2">
+        <div class="card" style="border-left:6px solid var(--brand)">
+          <h3>会社（あなた）</h3>
+          <ul>
+            <li>リアルタイムで入力（まずは70点で十分）</li>
+            <li>傾向を掴み、行動（値上げ/販促/コスト）に反映</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:6px solid var(--brand-dark)">
+          <h3>松本会計</h3>
+          <ul>
+            <li>毎月の巡回監査で正確性を100点へ</li>
+            <li>変動損益をベースに黒字化の打ち手を助言</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="next('compare')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('vc')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: comparison -->
+    <section id="compare" class="section card">
+      <h2>「他社システム」志向の方へ：TKCでの実現例</h2>
+      <table class="table">
+        <thead>
+          <tr><th>観点</th><th>TKCでの実現例</th><th>補足</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>管理会計（変動損益）</td>
+            <td>ワンクリックで変動損益表示、打ち手に直結</td>
+            <td class="muted">「今やるべきこと」を可視化</td>
+          </tr>
+          <tr>
+            <td>データ連携</td>
+            <td>銀行/信販データの自動取込</td>
+            <td class="muted">記帳の手間を大幅削減</td>
+          </tr>
+          <tr>
+            <td>証憑管理</td>
+            <td>領収書/請求書のAI読取→仕訳候補</td>
+            <td class="muted">電子帳簿保存の下地づくり</td>
+          </tr>
+          <tr>
+            <td>運用体制</td>
+            <td>自社入力×毎月巡回監査の二人三脚</td>
+            <td class="muted">リアルタイム70点→申告時100点</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">※ 他システムにも優れた点はあります。本表は「TKCでの実現例」を示すものです。</div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="next('summary')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('roles')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: summary / CTA -->
+    <section id="summary" class="section card">
+      <h2>まとめ</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>あなたに合わせた提案</h3>
+          <div id="recText" class="copy" aria-live="polite"></div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn" onclick="copyText()">内容をコピー</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>次の一歩</h3>
+          <p>デモや個別相談をご希望でしたら、以下よりお気軽にご連絡ください。</p>
+          <a class="btn btn-primary" href="https://cms.tkcnf.com/masatomi/form/inquiry" target="_blank" rel="noopener">お問合せフォームを開く</a>
+          <p class="note" style="margin-top:8px">お急ぎの方はお電話もご利用ください（境港 0859-44-6195 / 神戸 078-242-2177）。</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>出典リンク：
+        <a href="https://www.matsumoto-kaikei.or.jp/digital-merit" target="_blank" rel="noopener">自計化のメリット</a> ／
+        <a href="https://www.matsumoto-kaikei.or.jp/software" target="_blank" rel="noopener">TKCシステムのメリット</a>
+      </div>
+      <div>© 松本会計 r1 — このツールは社内デモ用の試作版です。数値は例示であり、最終判断は専門家による個別助言に基づきます。</div>
+    </footer>
+  </div>
+
+<script>
+  const state = {
+    persona: '',
+    delayDays: 30,
+    auto: 0.5,
+    bank:false, ocr:false, sales:false,
+    fixed: 300000,
+    cm: 0.622,
+    unit: 10000,
+  };
+  const fmtY = v => new Intl.NumberFormat('ja-JP', {style:'currency', currency:'JPY', maximumFractionDigits:0}).format(v);
+  const fmtN = v => new Intl.NumberFormat('ja-JP', {maximumFractionDigits:0}).format(v);
+
+  function setPersona(p){ state.persona = p; next('realtime'); }
+  function back(id){ show(id); progress(id); buildSummary(); }
+  function next(id){ show(id); progress(id); buildSummary(); }
+  function show(id){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+  function progress(id){
+    const order = ['welcome','realtime','automation','vc','roles','compare','summary'];
+    const idx = Math.max(1, order.indexOf(id)+1);
+    document.getElementById('bar').style.width = (idx/order.length*100)+'%';
+  }
+
+  // Realtime
+  function updateDelay(v){
+    state.delayDays = Number(v);
+    document.getElementById('delayDays').textContent = v;
+    const d = state.delayDays;
+    let msg = '';
+    if(d <= 7) msg = '◎「ほぼリアルタイム」です。この水準を維持しつつ、打ち手へ素早く反映しましょう。';
+    else if(d <= 30) msg = '◯ まだ意思決定に活かせます。自動化で更に短縮を。';
+    else msg = '△ 情報が古くなりがちです。数ヶ月前の数字は「賞味期限切れ」となり、現状に合わない判断につながりやすくなります。';
+    document.getElementById('realtimeMsg').textContent = msg;
+    buildSummary();
+  }
+
+  // Automation
+  function updateAuto(){
+    state.bank = document.getElementById('bankCk').checked;
+    state.ocr  = document.getElementById('ocrCk').checked;
+    state.sales= document.getElementById('salesCk').checked;
+    let base = 0.5; // 50% 基礎
+    if(state.bank) base += 0.15;
+    if(state.ocr)  base += 0.15;
+    if(state.sales)base += 0.10;
+    base = Math.min(base, 0.90); // 最大90%
+    state.auto = base;
+    document.getElementById('autoPct').textContent = Math.round(base*100)+'%';
+    buildSummary();
+  }
+
+  // Variable Costing calc
+  function calcVC(){
+    state.fixed = Math.max(0, Number(document.getElementById('fixed').value||0));
+    state.cm    = Number(document.getElementById('cmrate').value)/100;
+    state.unit  = Math.max(1, Number(document.getElementById('unit').value||1));
+    document.getElementById('cmDisp').textContent = (state.cm*100).toFixed(1)+'%';
+    const needSales = state.cm > 0 ? state.fixed / state.cm : 0; // 必要売上
+    const perDay    = needSales/25;
+    const unitsDay  = perDay / state.unit;
+    document.getElementById('needSales').textContent = fmtY(needSales);
+    document.getElementById('perDay').textContent    = fmtY(perDay);
+    document.getElementById('unitsPerDay').textContent = (Math.ceil(unitsDay*10)/10).toLocaleString('ja-JP');
+    buildSummary();
+  }
+
+  function buildSummary(){
+    // Build a short tailored message
+    const lines = [];
+    if(state.persona){ lines.push(`【前提】現在のご志向：${state.persona}`); }
+    lines.push(`【リアルタイム性】月次は約${state.delayDays}日遅れ。→ まずは自動化で短縮。`);
+    lines.push(`【自動化の方向】推定自動化率：${Math.round(state.auto*100)}%（銀行:${state.bank?'✔':'—'} / 証憑AI:${state.ocr?'✔':'—'} / 連携:${state.sales?'✔':'—'}）`);
+    const need = document.getElementById('needSales').textContent || '—';
+    const per  = document.getElementById('perDay').textContent || '—';
+    const upd   = document.getElementById('unitsPerDay').textContent || '—';
+    const cmTxt = document.getElementById('cmDisp').textContent || '—';
+    lines.push(`【変動損益の示唆】限界利益率 ${cmTxt} 前提で、固定費増分に対する必要売上は ${need} ／日当たり ${per}（単価ベースで ${upd} 件/日）。`);
+    lines.push('【役割分担】自社でリアルタイム70点 → 松本会計の巡回監査で100点へ。');
+    document.getElementById('recText').textContent = lines.join('\n');
+  }
+
+  function copyText(){
+    const el = document.getElementById('recText');
+    const range = document.createRange();
+    range.selectNode(el);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    try{ document.execCommand('copy'); }catch(e){}
+    sel.removeAllRanges();
+    alert('内容をコピーしました');
+  }
+
+  // init
+  updateDelay(30); updateAuto(); calcVC(); buildSummary();
+</script>
+</body>
+</html>
