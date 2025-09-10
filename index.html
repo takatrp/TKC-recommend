@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>自計化 × TKC 学習ツール｜松本会計 r5（mobile最適化）</title>
+<title>自計化 × TKC 学習ツール｜松本会計 r6</title>
 <style>
   :root{
     --brand:#578899; /* 松本会計 基調色 */
@@ -14,32 +14,32 @@
     --card:#ffffff;
   }
   html,body{height:100%;}
-  body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color:var(--ink); background:var(--bg);}  
-  .container{max-width:1100px; margin:0 auto; padding:16px;}
-  .header{display:flex; align-items:center; gap:12px; padding:16px;}
+  body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color:var(--ink); background:var(--bg);} 
+  .container{max-width:1024px; margin:0 auto; padding:12px;}
+  .header{display:flex; align-items:center; gap:12px; padding:12px 0;}
   .logo{width:36px; height:36px; border-radius:8px; background:var(--brand); display:grid; place-items:center; color:#fff; font-weight:700;}
-  h1{font-size:clamp(20px, 3.2vw, 30px); margin:0;}
+  h1{font-size:clamp(18px, 3.4vw, 28px); margin:0;}
   .subtitle{color:var(--muted); margin-top:4px;}
-  .card{background:var(--card); border-radius:16px; box-shadow:0 4px 18px rgba(0,0,0,.08); padding:18px;}
-  .grid{display:grid; gap:16px;}
-  .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr));}
-  @media (max-width: 900px){ .grid.cols-2{grid-template-columns:1fr;} }
-  .btn{appearance:none; border:1px solid #cbd5e1; background:#fff; color:var(--ink); padding:12px 16px; border-radius:12px; font-weight:600; cursor:pointer; transition:.15s ease-in-out;}
+  .card{background:var(--card); border-radius:16px; box-shadow:0 4px 18px rgba(0,0,0,.08); padding:14px;}
+  .grid{display:grid; gap:12px;}
+  .two{grid-template-columns:repeat(2, minmax(0,1fr));}
+  @media (max-width: 820px){ .two{grid-template-columns:1fr;} }
+  .btn{appearance:none; border:1px solid #cbd5e1; background:#fff; color:var(--ink); padding:10px 12px; border-radius:12px; font-weight:600; cursor:pointer; transition:.15s ease-in-out; font-size:14px}
   .btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(0,0,0,.08)}
   .btn:disabled{opacity:.6; cursor:not-allowed;}
   .btn-primary{background:var(--brand); color:#fff; border-color:transparent;}
-  .btn-ghost{background:transparent; border-color:transparent; color:var(--brand);}
-  .pill{display:inline-block; padding:6px 10px; border-radius:999px; background:#e2e8f0; color:#0f172a; font-size:12px; font-weight:700;}
+  .btn-ghost{background:transparent; border-color:transparent; color:var(--brand);} 
+  .pill{display:inline-block; padding:5px 9px; border-radius:999px; background:#e2e8f0; color:#0f172a; font-size:12px; font-weight:700;}
   .accent{color:var(--brand)}
   .kpi{display:flex; align-items:baseline; gap:8px;}
-  .kpi .big{font-size:28px; font-weight:800;}
+  .kpi .big{font-size:22px; font-weight:800;}
   .muted{color:var(--muted)}
   .section{display:none; animation:fade .25s ease}
   .section.active{display:block}
   @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
   .progress{height:6px; background:#e2e8f0; border-radius:999px; overflow:hidden}
   .progress > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--brand), var(--brand-dark)); transition:width .25s ease}
-  .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .row{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
   .mini{font-size:12px}
   .switch{position:relative; width:48px; height:28px}
   .switch input{display:none}
@@ -48,44 +48,19 @@
   .switch input:checked + .track{background:var(--brand)}
   .switch input:checked + .track .thumb{transform:translateX(20px)}
   .table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px}
-  .table th, .table td{padding:12px; border-bottom:1px solid #e5e7eb; text-align:left;}
+  .table th, .table td{padding:10px; border-bottom:1px solid #e5e7eb; text-align:left; font-size:12px}
   .table tr:last-child td{border-bottom:none}
+  .table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .table.minw{min-width:640px}
   .note{font-size:12px; color:var(--muted)}
-  .footer{padding:24px 12px; color:var(--muted); font-size:12px}
-  .tag{background:#eef2ff; color:#3730a3; border:1px solid #c7d2fe; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:700}
-  .copy{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#0b1220; color:#d1e9ff; padding:12px; border-radius:12px; overflow:auto}
-  .hero{width:100%; border-radius:12px; margin-top:10px; box-shadow:0 2px 10px rgba(0,0,0,.06)}
-  figure{margin:0}
-  figcaption{font-size:12px; color:#6b7280; margin-top:6px}
-  /* --- mobile最適化 --- */
-  .table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
-  .table.minw{min-width:640px}
-  @media (max-width:600px){
-    .container{padding:12px}
-    .card{padding:14px}
-    .header{padding:12px}
-    .kpi .big{font-size:22px}
-    .table th, .table td{padding:8px; font-size:12px}
-    .hero{max-height:220px; object-fit:contain}
-    .grid.cols-2{grid-template-columns:1fr}
-    .grid[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
-    .btn{padding:10px 12px; font-size:14px}
-  }
-  /* --- mobile最適化 --- */
-  .table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
-  .table.minw{min-width:640px}
-  @media (max-width:600px){
-    .container{padding:12px}
-    .card{padding:14px}
-    .header{padding:12px}
-    .kpi .big{font-size:22px}
-    .table th, .table td{padding:8px; font-size:12px}
-    .hero{max-height:220px; object-fit:contain}
-    .grid.cols-2{grid-template-columns:1fr}
-    .grid[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
-    .btn{padding:10px 12px; font-size:14px}
-    .table{display:block; overflow-x:auto; white-space:nowrap}
-  }
+  .footer{padding:20px 10px; color:var(--muted); font-size:12px}
+  .tag{background:#eef2ff; color:#3730a3; border:1px solid #c7d2fe; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700}
+  .copy{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#0b1220; color:#d1e9ff; padding:10px; border-radius:12px; overflow:auto; font-size:12px}
+  .hero{width:100%; border-radius:12px; margin-top:6px; box-shadow:0 2px 10px rgba(0,0,0,.06); max-height:220px; object-fit:contain}
+  .toc{display:flex; gap:6px; flex-wrap:wrap}
+  .toc .btn{padding:8px 10px}
+  .sticky-nav{position:sticky; bottom:8px; z-index:10; display:flex; gap:8px; justify-content:center}
+  .pill.live{background:#dcfce7; color:#166534}
 </style>
 </head>
 <body>
@@ -93,18 +68,28 @@
     <header class="header">
       <div class="logo">MK</div>
       <div>
-        <h1>自計化 × TKC 学習ツール $1r5 mobile$2</h1>
+        <h1>自計化 × TKC 学習ツール <span class="pill">r6（MAS優先）</span></h1>
         <div class="subtitle">「クリックして学ぶ」— 記帳代行志向・他社システム志向の方へ、松本会計の考え方を対話形式でご紹介します。</div>
       </div>
     </header>
 
-    <div class="card" style="margin-bottom:12px">
+    <div class="card" style="margin-bottom:10px">
       <div class="progress"><i id="bar" style="width:5%"></i></div>
+      <div class="toc" style="margin-top:8px">
+        <button class="btn" onclick="route('welcome')">はじめに</button>
+        <button class="btn" onclick="route('realtime')">リアルタイム性</button>
+        <button class="btn" onclick="route('automation')">自動化</button>
+        <button class="btn" onclick="route('vc')">変動損益</button>
+        <button class="btn" onclick="route('roles')">役割分担</button>
+        <button class="btn" onclick="route('compare')">比較</button>
+        <button class="btn btn-primary" onclick="route('mas')">継続MAS</button>
+        <button class="btn" onclick="route('summary')">まとめ</button>
+      </div>
     </div>
 
     <!-- Section: welcome -->
-    <section id="welcome" class="section active card">
-      <div class="grid cols-2">
+    <section id="welcome" class="section card">
+      <div class="grid two">
         <div>
           <h2>まずは教えてください</h2>
           <p class="muted">今のお気持ちに近い方を選ぶと、最適なストーリーでご案内します。</p>
@@ -112,16 +97,24 @@
             <button class="btn btn-primary" onclick="setPersona('記帳代行派')">記帳代行を希望している</button>
             <button class="btn" onclick="setPersona('他社派')">他社システムを使いたい</button>
           </div>
-          <p class="note" style="margin-top:10px">※ どちらを選んでも内容は全て見られます。導入の押し売りではなく、<span class="accent">黒字経営の実現</span>を最優先に考えた設計です。</p>
-          <div style="margin-top:16px">
+          <p class="note" style="margin-top:8px">※ どちらを選んでも内容は全て見られます。導入の押し売りではなく、<span class="accent">黒字経営の実現</span>を最優先に考えた設計です。</p>
+          <div style="margin-top:12px">
             <button class="btn" onclick="next('realtime')">飛ばしてはじめる →</button>
           </div>
         </div>
         <div>
-          <figure>
-            <img class="hero" loading="lazy" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfd396072623d15febee2.png" alt="自計化の流れ：自社入力と記帳代行の対比（当事務所サイトより）">
-            <figcaption>出典：当事務所サイト「自計化のメリット」</figcaption>
-          </figure>
+          <div class="card" style="background:linear-gradient(180deg,#f1f5f9,#fff)">
+            <h3>このツールで分かること</h3>
+            <ul>
+              <li>なぜ「リアルタイムの数字」が行動を変えるのか</li>
+              <li>自動化の仕組み（銀行/信販データ、証憑AI）と到達できる水準</li>
+              <li>変動損益計算書で「今やるべきこと」を数値化する方法</li>
+              <li>会社と会計事務所の役割分担（70点→100点）</li>
+              <li>TKCでの実現例と、<b>継続MAS</b>・次の一歩</li>
+            </ul>
+            <div class="note">出典リンクは最下部にまとめています。</div>
+            <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfd396072623d15febee2.png" alt="自計化のメリット 図解（当事務所サイトより）" loading="lazy">
+          </div>
         </div>
       </div>
     </section>
@@ -131,11 +124,11 @@
       <h2>リアルタイム性チェック</h2>
       <p>月次の試算表（粗利や費用の推移）を、<b>何日遅れ</b>で見ていますか？</p>
       <div class="row">
-        <input id="delay" type="range" min="0" max="120" step="1" value="30" oninput="updateDelay(this.value)" style="width:240px">
+        <input id="delay" type="range" min="0" max="120" step="1" value="30" oninput="updateDelay(this.value)" style="width:220px">
         <div class="kpi"><span class="big" id="delayDays">30</span><span>日遅れ</span></div>
       </div>
-      <p id="realtimeMsg" class="muted" style="margin-top:8px"></p>
-      <div class="row" style="margin-top:12px">
+      <p id="realtimeMsg" class="muted" style="margin-top:6px"></p>
+      <div class="row" style="margin-top:10px">
         <button class="btn" onclick="next('automation')">次へ</button>
         <button class="btn btn-ghost" onclick="back('welcome')">← 戻る</button>
       </div>
@@ -145,7 +138,7 @@
     <section id="automation" class="section card">
       <h2>自動化できるところから始めましょう</h2>
       <p class="muted">チェックを入れると推定自動化率が上がります（例示）。</p>
-      <div class="grid cols-2">
+      <div class="grid two">
         <div class="card">
           <label class="row"><span class="tag">入力の自動化</span></label>
           <div class="row" style="justify-content:space-between">
@@ -157,7 +150,7 @@
               <input type="checkbox" id="bankCk" onchange="updateAuto()"><span class="track"><i class="thumb"></i></span>
             </label>
           </div>
-          <div class="row" style="justify-content:space-between; margin-top:12px">
+          <div class="row" style="justify-content:space-between; margin-top:10px">
             <div>
               <div class="row mini"><b>証憑保存（AI読取・仕訳）</b></div>
               <div class="note">レシート/請求書のOCR→仕訳候補</div>
@@ -166,7 +159,7 @@
               <input type="checkbox" id="ocrCk" onchange="updateAuto()"><span class="track"><i class="thumb"></i></span>
             </label>
           </div>
-          <div class="row" style="justify-content:space-between; margin-top:12px">
+          <div class="row" style="justify-content:space-between; margin-top:10px">
             <div>
               <div class="row mini"><b>販売・給与・請求の連携</b></div>
               <div class="note">主要台帳と会計の自動連係</div>
@@ -179,9 +172,10 @@
         <div class="card">
           <div class="kpi"><span class="big" id="autoPct">50%</span><span> 推定自動化率</span></div>
           <p class="muted mini">※ 業種によりますが、<b>最大で約90%程度の自動化も可能</b>（当事務所のご案内より）。完璧でなくても傾向把握には十分、という前提でOKです。</p>
+          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfd397a31bc360683b0e6.png" alt="自計化に向けた人物イメージ（当事務所サイトより）" loading="lazy">
         </div>
       </div>
-      <div class="row" style="margin-top:12px">
+      <div class="row" style="margin-top:10px">
         <button class="btn" onclick="next('vc')">次へ</button>
         <button class="btn btn-ghost" onclick="back('realtime')">← 戻る</button>
       </div>
@@ -191,27 +185,156 @@
     <section id="vc" class="section card">
       <h2>変動損益 計算ミニツール</h2>
       <p>固定費が増えるとき、<b>追加で必要な売上高</b>はいくら？（管理会計の基本）</p>
-      <div class="grid cols-2">
+      <div class="grid two">
         <div class="card">
           <label>追加固定費（例：人件費）<br><input id="fixed" type="number" value="300000" min="0" step="1000" oninput="calcVC()" style="width:100%; padding:10px; border-radius:10px; border:1px solid #cbd5e1"></label>
-          <div style="height:8px"></div>
+          <div style="height:6px"></div>
           <label>限界利益率（%）<br><input id="cmrate" type="range" min="30" max="85" step="0.1" value="62.2" oninput="calcVC()" style="width:100%"></label>
           <div class="row mini"><span class="muted">現在値：</span><b id="cmDisp">62.2%</b></div>
-          <div style="height:8px"></div>
+          <div style="height:6px"></div>
           <label>平均単価（任意）<br><input id="unit" type="number" value="10000" min="1" step="100" oninput="calcVC()" style="width:100%; padding:10px; border-radius:10px; border:1px solid #cbd5e1"></label>
         </div>
         <div class="card">
           <div class="kpi"><span class="big" id="needSales">—</span><span>/ 月 の追加売上が必要</span></div>
           <div class="row mini"><span class="muted">＝ 一日あたり</span><b id="perDay">—</b><span class="muted"> / 25営業日</span></div>
           <div class="row mini"><span class="muted">＝ 必要販売数/日：</span><b id="unitsPerDay">—</b></div>
-          <div class="note" style="margin-top:8px">例：固定費30万円、限界利益率62.2% → 482,315円/月（単価1万円なら約2件/日）</div>
-          <figure>
-            <img class="hero" loading="lazy" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe88568ee7f85fd66585.png" alt="通常の損益計算書と変動損益計算書のイメージ（当事務所サイトより）">
-            <figcaption>出典：当事務所サイト「ＴＫＣシステムのメリット」</figcaption>
-          </figure>
+          <div class="note" style="margin-top:6px">例：固定費30万円、限界利益率62.2% → 482,315円/月（単価1万円なら約2件/日）</div>
+          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe887a31bc360683b0ff.jpg" alt="変動損益計算書の画面イメージ（限界利益率の例示）" loading="lazy">
+          <div class="row" style="margin-top:8px">
+            <a class="btn" href="https://takatrp.github.io/hendou_PL/" target="_blank" rel="noopener">ボールで学ぶ変動損益計算書</a>
+          </div>
         </div>
       </div>
-      <div class="row" style="margin-top:10px"><button class="btn" onclick="next('summary')">次へ →</button></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="next('roles')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('automation')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: roles -->
+    <section id="roles" class="section card">
+      <h2>役割分担：70点→100点の設計</h2>
+      <div class="grid two">
+        <div class="card" style="border-left:6px solid var(--brand)">
+          <h3>会社（あなた）</h3>
+          <ul>
+            <li>リアルタイムで入力（まずは70点で十分）</li>
+            <li>傾向を掴み、行動（値上げ/販促/コスト）に反映</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:6px solid var(--brand-dark)">
+          <h3>松本会計</h3>
+          <ul>
+            <li>毎月の巡回監査で正確性を100点へ</li>
+            <li>変動損益をベースに黒字化の打ち手を助言</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="next('compare')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('vc')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: comparison -->
+    <section id="compare" class="section card">
+      <h2>「他社システム」志向の方へ：TKCでの実現例</h2>
+      <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe88568ee7f85fd66585.png" alt="通常の損益計算書と変動損益計算書のイメージ（当事務所サイトより）" loading="lazy">
+      <div class="table-wrap" style="margin-top:6px">
+        <table class="table minw">
+          <thead>
+            <tr><th>観点</th><th>TKCでの実現例</th><th>補足</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>管理会計（変動損益）</td>
+              <td>ワンクリックで変動損益表示、打ち手に直結</td>
+              <td class="muted">「今やるべきこと」を可視化</td>
+            </tr>
+            <tr>
+              <td>データ連携</td>
+              <td>銀行/信販データの自動取込</td>
+              <td class="muted">記帳の手間を大幅削減</td>
+            </tr>
+            <tr>
+              <td>証憑管理</td>
+              <td>領収書/請求書のAI読取→仕訳候補</td>
+              <td class="muted">電子帳簿保存の下地づくり</td>
+            </tr>
+            <tr>
+              <td>運用体制</td>
+              <td>自社入力×毎月巡回監査の二人三脚</td>
+              <td class="muted">リアルタイム70点→申告時100点</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="next('mas')">次へ</button>
+        <button class="btn btn-ghost" onclick="back('roles')">← 戻る</button>
+      </div>
+    </section>
+
+    <!-- Section: 継続MAS（デフォルト表示） -->
+    <section id="mas" class="section card active">
+      <h2>継続MAS：未来から逆算する経営計画（簡易デモ付き） <span class="pill live">NOW</span></h2>
+      <p>継続MASは、<b>経営者と会計事務所の対話</b>から「あるべき未来像」を定め、<b>年次・月次の計画値</b>を会計ソフトに落とし込み、<b>実績と比較し続ける</b>“経営のペースメーカー”です。</p>
+      <div class="grid two">
+        <div class="card">
+          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe885481aa2a4c5b58e1.png" alt="過去・現在・未来の3視点（制度会計／変動損益／継続MAS）" loading="lazy">
+          <ul>
+            <li>「過去（制度会計）」「現在（変動損益）」「未来（継続MAS）」の<b>3視点で経営</b></li>
+            <li>年間計画→月次計画に<b>ブレークダウン</b>し、<b>実績と差異</b>を毎月レビュー</li>
+            <li>差異要因に応じて、<b>値上げ・販促・コスト・稼働</b>などの打ち手を調整</li>
+          </ul>
+          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe88ec0eaa37155316fb.png" alt="黒字決算のための5原則（当事務所サイトより）" loading="lazy">
+        </div>
+        <div class="card">
+          <h3>継続MAS 簡易デモ</h3>
+          <div class="row mini"><label class="row" style="gap:6px"><input type="checkbox" id="compactToggle" checked onchange="toggleMasCompact()"> 表をコンパクト表示</label></div>
+          <div class="grid two" id="mas_inputs">
+            <label>年間売上計画（円）<br><input id="mas_plan_sales" type="number" value="36000000" min="0" step="10000" oninput="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+            <label>限界利益率（%）<br><input id="mas_plan_cm" type="range" min="30" max="85" step="0.1" value="62.2" oninput="buildMasPlan()" style="width:100%"></label>
+            <label>年間固定費（円）<br><input id="mas_plan_fixed" type="number" value="18000000" min="0" step="10000" oninput="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+            <label>配賦パターン<br>
+              <select id="mas_pattern" onchange="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px">
+                <option value="even">均等（12分割）</option>
+                <option value="season">繁忙・閑散あり</option>
+              </select>
+            </label>
+          </div>
+          <div class="row mini" style="margin:6px 0"><span class="muted">現在の限界利益率：</span><b id="mas_cm_disp">62.2%</b></div>
+
+          <div id="mas_compact_panel" class="card" style="background:#f8fafc; border:1px dashed #cbd5e1">
+            <h4 style="margin:0 0 4px 0">今月の実績入力（コンパクト）</h4>
+            <div class="grid two">
+              <label>対象月（1-12）<br><input id="mas_act_month" type="number" min="1" max="12" value="5" oninput="updateMasDemo()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+              <label>売上実績（円）<br><input id="mas_act_sales" type="number" min="0" step="10000" value="3000000" oninput="updateMasDemo()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
+            </div>
+            <div class="row mini" style="margin-top:6px"><span class="muted">前提：変動費は売上に連動（限界利益率は計画と同じ）</span></div>
+            <div class="table-wrap" style="margin-top:6px">
+              <table class="table minw">
+                <thead><tr><th></th><th>売上</th><th>限界利益</th><th>固定費</th><th>経常利益</th></tr></thead>
+                <tbody id="mas_demo_tbody"></tbody>
+              </table>
+            </div>
+            <div id="mas_msg" class="note"></div>
+          </div>
+
+          <details id="mas_full_panel" style="margin-top:8px">
+            <summary class="btn">月次計画表を開く（フル）</summary>
+            <div class="table-wrap" style="margin-top:6px">
+              <table class="table minw">
+                <thead><tr><th>月</th><th>売上（計画）</th><th>限界利益（計画）</th><th>固定費（月割）</th><th>経常利益（計画）</th></tr></thead>
+                <tbody id="mas_plan_tbody"></tbody>
+              </table>
+            </div>
+          </details>
+
+          <div class="row sticky-nav" style="margin-top:8px">
+            <button class="btn" onclick="route('vc')">← 変動損益</button>
+            <button class="btn btn-primary" onclick="route('summary')">まとめへ →</button>
+          </div>
         </div>
       </div>
     </section>
@@ -219,11 +342,11 @@
     <!-- Section: summary / CTA -->
     <section id="summary" class="section card">
       <h2>まとめ</h2>
-      <div class="grid cols-2">
+      <div class="grid two">
         <div class="card">
           <h3>あなたに合わせた提案</h3>
           <div id="recText" class="copy" aria-live="polite"></div>
-          <div class="row" style="margin-top:10px">
+          <div class="row" style="margin-top:8px">
             <button class="btn" onclick="copyText()">内容をコピー</button>
           </div>
         </div>
@@ -231,7 +354,7 @@
           <h3>次の一歩</h3>
           <p>デモや個別相談をご希望でしたら、以下よりお気軽にご連絡ください。</p>
           <a class="btn btn-primary" href="https://cms.tkcnf.com/masatomi/form/inquiry" target="_blank" rel="noopener">お問合せフォームを開く</a>
-          <p class="note" style="margin-top:8px">お急ぎの方はお電話もご利用ください（境港 0859-44-6195 / 神戸 078-242-2177）。</p>
+          <p class="note" style="margin-top:6px">お急ぎの方はお電話もご利用ください（境港 0859-44-6195 / 神戸 078-242-2177）。</p>
         </div>
       </div>
     </section>
@@ -242,7 +365,7 @@
         <a href="https://www.matsumoto-kaikei.or.jp/software" target="_blank" rel="noopener">ＴＫＣシステムのメリット</a> ／
         <a href="https://takatrp.github.io/hendou_PL/" target="_blank" rel="noopener">ボールで学ぶ変動損益計算書</a>
       </div>
-      <div>© 松本会計 r5 — このツールは社内デモ用の試作版です。数値は例示であり、最終判断は専門家による個別助言に基づきます。</div>
+      <div>© 松本会計 r6 — このツールは社内デモ用の試作版です。数値は例示であり、最終判断は専門家による個別助言に基づきます。</div>
     </footer>
   </div>
 
@@ -257,144 +380,86 @@
     unit: 10000,
   };
   const fmtY = v => new Intl.NumberFormat('ja-JP', {style:'currency', currency:'JPY', maximumFractionDigits:0}).format(v);
-  const fmtN = v => new Intl.NumberFormat('ja-JP', {maximumFractionDigits:0}).format(v);
 
+  // Routing helpers
+  function show(id){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); const el = document.getElementById(id); if(el){ el.classList.add('active'); } }
+  function progress(id){ const order=['welcome','realtime','automation','vc','roles','compare','mas','summary']; const idx=Math.max(1, order.indexOf(id)+1); const bar=document.getElementById('bar'); if(bar){ bar.style.width=(idx/order.length*100)+'%'; } }
+  function route(id){ location.hash = id; show(id); progress(id); if(id==='mas'){ buildMasPlan(); }
+    if(id==='vc'){ calcVC(); }
+  }
+  function back(id){ route(id); buildSummary(); }
+  function next(id){ route(id); buildSummary(); }
+
+  // Persona & summary
   function setPersona(p){ state.persona = p; next('realtime'); }
-  function back(id){ show(id); progress(id); buildSummary(); }
-  function next(id){ show(id); progress(id); buildSummary(); }
-  function show(id){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-  function progress(id){
-    const order = ['welcome','realtime','automation','vc','roles','compare','mas','summary'];
-    const idx = Math.max(1, order.indexOf(id)+1);
-    document.getElementById('bar').style.width = (idx/order.length*100)+'%';
-  }
-
-  // Realtime
-  function updateDelay(v){
-    state.delayDays = Number(v);
-    document.getElementById('delayDays').textContent = v;
-    const d = state.delayDays;
-    let msg = '';
-    if(d <= 7) msg = '◎「ほぼリアルタイム」です。この水準を維持しつつ、打ち手へ素早く反映しましょう。';
-    else if(d <= 30) msg = '◯ まだ意思決定に活かせます。自動化で更に短縮を。';
-    else msg = '△ 情報が古くなりがちです。数ヶ月前の数字は「賞味期限切れ」となり、現状に合わない判断につながりやすくなります。';
-    document.getElementById('realtimeMsg').textContent = msg;
-    buildSummary();
-  }
-
-  // Automation
-  function updateAuto(){
-    state.bank = document.getElementById('bankCk').checked;
-    state.ocr  = document.getElementById('ocrCk').checked;
-    state.sales= document.getElementById('salesCk').checked;
-    let base = 0.5; // 50% 基礎
-    if(state.bank) base += 0.15;
-    if(state.ocr)  base += 0.15;
-    if(state.sales)base += 0.10;
-    base = Math.min(base, 0.90); // 最大90%
-    state.auto = base;
-    document.getElementById('autoPct').textContent = Math.round(base*100)+'%';
-    buildSummary();
-  }
-
-  // Variable Costing calc
-  function calcVC(){
-    state.fixed = Math.max(0, Number(document.getElementById('fixed').value||0));
-    state.cm    = Number(document.getElementById('cmrate').value)/100;
-    state.unit  = Math.max(1, Number(document.getElementById('unit').value||1));
-    document.getElementById('cmDisp').textContent = (state.cm*100).toFixed(1)+'%';
-    const needSales = state.cm > 0 ? state.fixed / state.cm : 0; // 必要売上
-    const perDay    = needSales/25;
-    const unitsDay  = perDay / state.unit;
-    document.getElementById('needSales').textContent = fmtY(needSales);
-    document.getElementById('perDay').textContent    = fmtY(perDay);
-    document.getElementById('unitsPerDay').textContent = (Math.ceil(unitsDay*10)/10).toLocaleString('ja-JP');
-    buildSummary();
-  }
-
-  // 継続MAS：計画表を生成
-  function buildMasPlan(){
-    const salesY = Number(document.getElementById('mas_plan_sales').value||0);
-    const cmRate = Number(document.getElementById('mas_plan_cm').value||0)/100;
-    const fixedY = Number(document.getElementById('mas_plan_fixed').value||0);
-    const cmDisp = document.getElementById('mas_cm_disp');
-    if(cmDisp){ cmDisp.textContent = (cmRate*100).toFixed(1)+'%'; }
-    const patternEl = document.getElementById('mas_pattern');
-    if(!patternEl){ return; }
-    const pattern = patternEl.value;
-    const weights = pattern==='season' ? [0.06,0.07,0.08,0.10,0.11,0.10,0.08,0.06,0.07,0.10,0.09,0.08] : Array(12).fill(1/12);
-    const sumW = weights.reduce((a,b)=>a+b,0);
-    const w = weights.map(v=>v/sumW);
-    const fixedM = fixedY/12;
-    const tbody = document.getElementById('mas_plan_tbody');
-    if(!tbody){ return; }
-    tbody.innerHTML = '';
-    const plan = [];
-    for(let m=1;m<=12;m++){
-      const s = Math.round(salesY * w[m-1]);
-      const cm = Math.round(s*cmRate);
-      const pr = Math.round(cm - fixedM);
-      plan.push({m,s,cm,fixed:Math.round(fixedM),pr});
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${m}月</td><td>${fmtY(s)}</td><td>${fmtY(cm)}</td><td>${fmtY(fixedM)}</td><td>${fmtY(pr)}</td>`;
-      tbody.appendChild(tr);
-    }
-    window.__masPlan = plan;
-    updateMasDemo();
-  }
-
-  // 継続MAS：実績との比較
-  function updateMasDemo(){
-    const plan = window.__masPlan || [];
-    const monthEl = document.getElementById('mas_act_month');
-    const salesEl = document.getElementById('mas_act_sales');
-    const tbody = document.getElementById('mas_demo_tbody');
-    const msgEl = document.getElementById('mas_msg');
-    if(!monthEl || !salesEl || !tbody){ return; }
-    const idx = Math.max(1, Math.min(12, Number(monthEl.value||1))) - 1;
-    const salesAct = Math.max(0, Number(salesEl.value||0));
-    const cmRate = Number(document.getElementById('mas_plan_cm').value||0)/100;
-    const fixed = plan[idx] ? plan[idx].fixed : 0;
-    const cmAct = Math.round(salesAct*cmRate);
-    const prAct = Math.round(cmAct - fixed);
-    const p = plan[idx] || {s:0,cm:0,pr:0,fixed:fixed};
-    tbody.innerHTML = '';
-    const row = (label,a,b,c,d)=>`<tr><td>${label}</td><td>${fmtY(a)}</td><td>${fmtY(b)}</td><td>${fmtY(c)}</td><td>${fmtY(d)}</td></tr>`;
-    tbody.insertAdjacentHTML('beforeend', row('計画', p.s, p.cm, p.fixed, p.pr));
-    tbody.insertAdjacentHTML('beforeend', row('実績', salesAct, cmAct, fixed, prAct));
-    if(msgEl){
-      const dvS = salesAct - p.s;
-      const dvP = prAct - p.pr;
-      msgEl.textContent = dvP>=0 ? `◎ 計画比 ${fmtY(dvP)} 上振れ（売上差 ${fmtY(dvS)}）。この調子で進めましょう。` : `△ 計画比 ${fmtY(dvP)} 下振れ（売上差 ${fmtY(dvS)}）。単価・数量・固定費の観点で是正策を検討。`;
-    }
-  }
-
   function buildSummary(){
     const lines = [];
     if(state.persona){ lines.push(`【前提】現在のご志向：${state.persona}`); }
     lines.push(`【リアルタイム性】月次は約${state.delayDays}日遅れ。→ まずは自動化で短縮。`);
     lines.push(`【自動化の方向】推定自動化率：${Math.round(state.auto*100)}%（銀行:${state.bank?'✔':'—'} / 証憑AI:${state.ocr?'✔':'—'} / 連携:${state.sales?'✔':'—'}）`);
-    const need = document.getElementById('needSales').textContent || '—';
-    const per  = document.getElementById('perDay').textContent || '—';
-    const upd   = document.getElementById('unitsPerDay').textContent || '—';
-    const cmTxt = document.getElementById('cmDisp').textContent || '—';
+    const need = document.getElementById('needSales')?.textContent || '—';
+    const per  = document.getElementById('perDay')?.textContent || '—';
+    const upd   = document.getElementById('unitsPerDay')?.textContent || '—';
+    const cmTxt = document.getElementById('cmDisp')?.textContent || '—';
     lines.push(`【変動損益の示唆】限界利益率 ${cmTxt} 前提で、固定費増分に対する必要売上は ${need} ／日当たり ${per}（単価ベースで ${upd} 件/日）。`);
+    lines.push('【継続MAS】年/⽉計画 ↔ 実績を毎月比較し、差異要因に応じて打ち手を調整。');
     lines.push('【役割分担】自社でリアルタイム70点 → 松本会計の巡回監査で100点へ。');
-    document.getElementById('recText').textContent = lines.join('\n');
+    const area = document.getElementById('recText'); if(area){ area.textContent = lines.join('\n'); }
   }
 
-  function copyText(){
-    const el = document.getElementById('recText');
-    const range = document.createRange();
-    range.selectNode(el);
-    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
-    try{ document.execCommand('copy'); }catch(e){}
-    sel.removeAllRanges();
-    alert('内容をコピーしました');
+  // Realtime
+  function updateDelay(v){ state.delayDays = Number(v); const dd=document.getElementById('delayDays'); if(dd){ dd.textContent = v; }
+    const d = state.delayDays; let msg='';
+    if(d <= 7) msg = '◎「ほぼリアルタイム」です。この水準を維持しつつ、打ち手へ素早く反映しましょう。';
+    else if(d <= 30) msg = '◯ まだ意思決定に活かせます。自動化で更に短縮を。';
+    else msg = '△ 情報が古くなりがちです。数ヶ月前の数字は「賞味期限切れ」となり、現状に合わない判断につながりやすくなります。';
+    const mt=document.getElementById('realtimeMsg'); if(mt){ mt.textContent=msg; }
+    buildSummary(); }
+
+  // Automation
+  function updateAuto(){ const b=document.getElementById('bankCk')?.checked; const o=document.getElementById('ocrCk')?.checked; const s=document.getElementById('salesCk')?.checked;
+    state.bank = !!b; state.ocr = !!o; state.sales = !!s; let base = 0.5; if(state.bank) base += 0.15; if(state.ocr) base += 0.15; if(state.sales) base += 0.10; base = Math.min(base, 0.90); state.auto = base;
+    const ap=document.getElementById('autoPct'); if(ap){ ap.textContent = Math.round(base*100)+'%'; }
+    buildSummary(); }
+
+  // Variable Costing calc
+  function calcVC(){ state.fixed = Math.max(0, Number(document.getElementById('fixed')?.value||0)); state.cm = Number(document.getElementById('cmrate')?.value||0)/100; state.unit = Math.max(1, Number(document.getElementById('unit')?.value||1));
+    const cmDisp=document.getElementById('cmDisp'); if(cmDisp){ cmDisp.textContent = (state.cm*100).toFixed(1)+'%'; }
+    const needSales = state.cm > 0 ? state.fixed / state.cm : 0; const perDay = needSales/25; const unitsDay = perDay / state.unit;
+    const ns=document.getElementById('needSales'); if(ns){ ns.textContent = fmtY(needSales); }
+    const pd=document.getElementById('perDay'); if(pd){ pd.textContent = fmtY(perDay); }
+    const upd=document.getElementById('unitsPerDay'); if(upd){ upd.textContent = (Math.ceil(unitsDay*10)/10).toLocaleString('ja-JP'); }
+    buildSummary(); }
+
+  function copyText(){ const el = document.getElementById('recText'); if(!el) return; const range = document.createRange(); range.selectNode(el); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range); try{ document.execCommand('copy'); }catch(e){} sel.removeAllRanges(); alert('内容をコピーしました'); }
+
+  // 継続MAS：計画表を生成
+  function buildMasPlan(){ const salesY = Number(document.getElementById('mas_plan_sales')?.value||0); const cmRate = Number(document.getElementById('mas_plan_cm')?.value||0)/100; const fixedY = Number(document.getElementById('mas_plan_fixed')?.value||0);
+    const cmDisp=document.getElementById('mas_cm_disp'); if(cmDisp){ cmDisp.textContent = (cmRate*100).toFixed(1)+'%'; }
+    const pattern = document.getElementById('mas_pattern')?.value || 'even';
+    const weights = pattern==='season' ? [0.06,0.07,0.08,0.10,0.11,0.10,0.08,0.06,0.07,0.10,0.09,0.08] : Array(12).fill(1/12);
+    const sumW = weights.reduce((a,b)=>a+b,0); const w = weights.map(v=>v/sumW); const fixedM = fixedY/12; const tbody = document.getElementById('mas_plan_tbody'); if(!tbody){ return; }
+    tbody.innerHTML = ''; const plan = [];
+    for(let m=1;m<=12;m++){ const s = Math.round(salesY * w[m-1]); const cm = Math.round(s*cmRate); const pr = Math.round(cm - fixedM); plan.push({m,s,cm,fixed:Math.round(fixedM),pr}); const tr = document.createElement('tr'); tr.innerHTML = `<td>${m}月</td><td>${fmtY(s)}</td><td>${fmtY(cm)}</td><td>${fmtY(fixedM)}</td><td>${fmtY(pr)}</td>`; tbody.appendChild(tr); }
+    window.__masPlan = plan; updateMasDemo(); }
+
+  // 継続MAS：実績との比較（コンパクト）
+  function updateMasDemo(){ const plan = window.__masPlan || []; const monthEl=document.getElementById('mas_act_month'); const salesEl=document.getElementById('mas_act_sales'); const tbody=document.getElementById('mas_demo_tbody'); const msgEl=document.getElementById('mas_msg'); if(!monthEl||!salesEl||!tbody){ return; }
+    const idx = Math.max(1, Math.min(12, Number(monthEl.value||1))) - 1; const salesAct = Math.max(0, Number(salesEl.value||0)); const cmRate = Number(document.getElementById('mas_plan_cm')?.value||0)/100; const fixed = plan[idx] ? plan[idx].fixed : 0; const cmAct = Math.round(salesAct*cmRate); const prAct = Math.round(cmAct - fixed); const p = plan[idx] || {s:0,cm:0,pr:0,fixed:fixed};
+    tbody.innerHTML = ''; const row = (label,a,b,c,d)=>`<tr><td>${label}</td><td>${fmtY(a)}</td><td>${fmtY(b)}</td><td>${fmtY(c)}</td><td>${fmtY(d)}</td></tr>`; tbody.insertAdjacentHTML('beforeend', row('計画', p.s, p.cm, p.fixed, p.pr)); tbody.insertAdjacentHTML('beforeend', row('実績', salesAct, cmAct, fixed, prAct));
+    if(msgEl){ const dvS = salesAct - p.s; const dvP = prAct - p.pr; msgEl.textContent = dvP>=0 ? `◎ 計画比 ${fmtY(dvP)} 上振れ（売上差 ${fmtY(dvS)}）。この調子で進めましょう。` : `△ 計画比 ${fmtY(dvP)} 下振れ（売上差 ${fmtY(dvS)}）。単価・数量・固定費の観点で是正策を検討。`; }
   }
 
-  // init
-  updateDelay(30); updateAuto(); calcVC(); buildMasPlan(); buildSummary();
+  function toggleMasCompact(){ const on = document.getElementById('compactToggle')?.checked; document.getElementById('mas_compact_panel').style.display = on ? 'block' : 'none'; document.getElementById('mas_full_panel').open = !on; }
+
+  // Initial
+  function init(){ updateDelay(30); updateAuto(); calcVC(); buildMasPlan(); buildSummary();
+    // Hash routing: #mas など
+    const id = location.hash?.replace('#','') || 'mas'; route(id);
+    // Ensure MAS visible by default on first load
+    if(!location.hash){ show('mas'); progress('mas'); }
+    toggleMasCompact(); }
+  document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
