@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>自計化 × TKC 学習ツール｜松本会計 r4</title>
+<title>自計化 × TKC 学習ツール｜松本会計 r5（mobile最適化）</title>
 <style>
   :root{
     --brand:#578899; /* 松本会計 基調色 */
@@ -14,21 +14,21 @@
     --card:#ffffff;
   }
   html,body{height:100%;}
-  body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color:var(--ink); background:var(--bg);} 
-  .container{max-width:1024px; margin:0 auto; padding:16px;}
-  .header{display:flex; align-items:center; gap:12px; padding:16px 0;}
+  body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color:var(--ink); background:var(--bg);}  
+  .container{max-width:1100px; margin:0 auto; padding:16px;}
+  .header{display:flex; align-items:center; gap:12px; padding:16px;}
   .logo{width:36px; height:36px; border-radius:8px; background:var(--brand); display:grid; place-items:center; color:#fff; font-weight:700;}
   h1{font-size:clamp(20px, 3.2vw, 30px); margin:0;}
   .subtitle{color:var(--muted); margin-top:4px;}
   .card{background:var(--card); border-radius:16px; box-shadow:0 4px 18px rgba(0,0,0,.08); padding:18px;}
   .grid{display:grid; gap:16px;}
   .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr));}
-  @media (max-width: 820px){ .grid.cols-2{grid-template-columns:1fr;} }
+  @media (max-width: 900px){ .grid.cols-2{grid-template-columns:1fr;} }
   .btn{appearance:none; border:1px solid #cbd5e1; background:#fff; color:var(--ink); padding:12px 16px; border-radius:12px; font-weight:600; cursor:pointer; transition:.15s ease-in-out;}
   .btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(0,0,0,.08)}
   .btn:disabled{opacity:.6; cursor:not-allowed;}
   .btn-primary{background:var(--brand); color:#fff; border-color:transparent;}
-  .btn-ghost{background:transparent; border-color:transparent; color:var(--brand);} 
+  .btn-ghost{background:transparent; border-color:transparent; color:var(--brand);}
   .pill{display:inline-block; padding:6px 10px; border-radius:999px; background:#e2e8f0; color:#0f172a; font-size:12px; font-weight:700;}
   .accent{color:var(--brand)}
   .kpi{display:flex; align-items:baseline; gap:8px;}
@@ -55,8 +55,37 @@
   .tag{background:#eef2ff; color:#3730a3; border:1px solid #c7d2fe; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:700}
   .copy{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#0b1220; color:#d1e9ff; padding:12px; border-radius:12px; overflow:auto}
   .hero{width:100%; border-radius:12px; margin-top:10px; box-shadow:0 2px 10px rgba(0,0,0,.06)}
-  .toc{display:flex; gap:8px; flex-wrap:wrap}
-  .toc .btn{padding:8px 10px}
+  figure{margin:0}
+  figcaption{font-size:12px; color:#6b7280; margin-top:6px}
+  /* --- mobile最適化 --- */
+  .table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .table.minw{min-width:640px}
+  @media (max-width:600px){
+    .container{padding:12px}
+    .card{padding:14px}
+    .header{padding:12px}
+    .kpi .big{font-size:22px}
+    .table th, .table td{padding:8px; font-size:12px}
+    .hero{max-height:220px; object-fit:contain}
+    .grid.cols-2{grid-template-columns:1fr}
+    .grid[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
+    .btn{padding:10px 12px; font-size:14px}
+  }
+  /* --- mobile最適化 --- */
+  .table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .table.minw{min-width:640px}
+  @media (max-width:600px){
+    .container{padding:12px}
+    .card{padding:14px}
+    .header{padding:12px}
+    .kpi .big{font-size:22px}
+    .table th, .table td{padding:8px; font-size:12px}
+    .hero{max-height:220px; object-fit:contain}
+    .grid.cols-2{grid-template-columns:1fr}
+    .grid[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
+    .btn{padding:10px 12px; font-size:14px}
+    .table{display:block; overflow-x:auto; white-space:nowrap}
+  }
 </style>
 </head>
 <body>
@@ -64,23 +93,13 @@
     <header class="header">
       <div class="logo">MK</div>
       <div>
-        <h1>自計化 × TKC 学習ツール <span class="pill">r4</span></h1>
+        <h1>自計化 × TKC 学習ツール $1r5 mobile$2</h1>
         <div class="subtitle">「クリックして学ぶ」— 記帳代行志向・他社システム志向の方へ、松本会計の考え方を対話形式でご紹介します。</div>
       </div>
     </header>
 
     <div class="card" style="margin-bottom:12px">
       <div class="progress"><i id="bar" style="width:5%"></i></div>
-      <div class="toc" style="margin-top:10px">
-        <button class="btn" onclick="show('welcome'); progress('welcome')">はじめに</button>
-        <button class="btn" onclick="show('realtime'); progress('realtime')">リアルタイム性</button>
-        <button class="btn" onclick="show('automation'); progress('automation')">自動化</button>
-        <button class="btn" onclick="show('vc'); progress('vc')">変動損益</button>
-        <button class="btn" onclick="show('roles'); progress('roles')">役割分担</button>
-        <button class="btn" onclick="show('compare'); progress('compare')">比較</button>
-        <button class="btn btn-primary" onclick="show('mas'); progress('mas')">継続MAS</button>
-        <button class="btn" onclick="show('summary'); progress('summary')">まとめ</button>
-      </div>
     </div>
 
     <!-- Section: welcome -->
@@ -99,18 +118,10 @@
           </div>
         </div>
         <div>
-          <div class="card" style="background:linear-gradient(180deg,#f1f5f9,#fff)">
-            <h3>このツールで分かること</h3>
-            <ul>
-              <li>なぜ「リアルタイムの数字」が行動を変えるのか</li>
-              <li>自動化の仕組み（銀行/信販データ、証憑AI）と到達できる水準</li>
-              <li>変動損益計算書で「今やるべきこと」を数値化する方法</li>
-              <li>会社と会計事務所の役割分担（70点→100点）</li>
-              <li>TKCでの実現例と、<b>継続MAS</b>・次の一歩</li>
-            </ul>
-            <div class="note">出典リンクは最下部にまとめています。</div>
-            <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfd396072623d15febee2.png" alt="自計化のメリット 図解（当事務所サイトより）" loading="lazy">
-          </div>
+          <figure>
+            <img class="hero" loading="lazy" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfd396072623d15febee2.png" alt="自計化の流れ：自社入力と記帳代行の対比（当事務所サイトより）">
+            <figcaption>出典：当事務所サイト「自計化のメリット」</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -168,7 +179,6 @@
         <div class="card">
           <div class="kpi"><span class="big" id="autoPct">50%</span><span> 推定自動化率</span></div>
           <p class="muted mini">※ 業種によりますが、<b>最大で約90%程度の自動化も可能</b>（当事務所のご案内より）。完璧でなくても傾向把握には十分、という前提でOKです。</p>
-          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfd397a31bc360683b0e6.png" alt="自計化に向けた人物イメージ（当事務所サイトより）" loading="lazy">
         </div>
       </div>
       <div class="row" style="margin-top:12px">
@@ -195,126 +205,13 @@
           <div class="row mini"><span class="muted">＝ 一日あたり</span><b id="perDay">—</b><span class="muted"> / 25営業日</span></div>
           <div class="row mini"><span class="muted">＝ 必要販売数/日：</span><b id="unitsPerDay">—</b></div>
           <div class="note" style="margin-top:8px">例：固定費30万円、限界利益率62.2% → 482,315円/月（単価1万円なら約2件/日）</div>
-          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe887a31bc360683b0ff.jpg" alt="変動損益計算書の画面イメージ（限界利益率の例示）" loading="lazy">
+          <figure>
+            <img class="hero" loading="lazy" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe88568ee7f85fd66585.png" alt="通常の損益計算書と変動損益計算書のイメージ（当事務所サイトより）">
+            <figcaption>出典：当事務所サイト「ＴＫＣシステムのメリット」</figcaption>
+          </figure>
         </div>
       </div>
-      <div class="row" style="margin-top:12px">
-        <button class="btn" onclick="next('roles')">次へ</button>
-        <button class="btn btn-ghost" onclick="back('automation')">← 戻る</button>
-      </div>
-    </section>
-
-    <!-- Section: roles -->
-    <section id="roles" class="section card">
-      <h2>役割分担：70点→100点の設計</h2>
-      <div class="grid cols-2">
-        <div class="card" style="border-left:6px solid var(--brand)">
-          <h3>会社（あなた）</h3>
-          <ul>
-            <li>リアルタイムで入力（まずは70点で十分）</li>
-            <li>傾向を掴み、行動（値上げ/販促/コスト）に反映</li>
-          </ul>
-        </div>
-        <div class="card" style="border-left:6px solid var(--brand-dark)">
-          <h3>松本会計</h3>
-          <ul>
-            <li>毎月の巡回監査で正確性を100点へ</li>
-            <li>変動損益をベースに黒字化の打ち手を助言</li>
-          </ul>
-        </div>
-      </div>
-      <div class="row" style="margin-top:12px">
-        <button class="btn" onclick="next('compare')">次へ</button>
-        <button class="btn btn-ghost" onclick="back('vc')">← 戻る</button>
-      </div>
-    </section>
-
-    <!-- Section: comparison -->
-    <section id="compare" class="section card">
-      <h2>「他社システム」志向の方へ：TKCでの実現例</h2>
-      <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe88568ee7f85fd66585.png" alt="通常の損益計算書と変動損益計算書のイメージ（当事務所サイトより）" loading="lazy">
-      <table class="table" style="margin-top:10px">
-        <thead>
-          <tr><th>観点</th><th>TKCでの実現例</th><th>補足</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>管理会計（変動損益）</td>
-            <td>ワンクリックで変動損益表示、打ち手に直結</td>
-            <td class="muted">「今やるべきこと」を可視化</td>
-          </tr>
-          <tr>
-            <td>データ連携</td>
-            <td>銀行/信販データの自動取込</td>
-            <td class="muted">記帳の手間を大幅削減</td>
-          </tr>
-          <tr>
-            <td>証憑管理</td>
-            <td>領収書/請求書のAI読取→仕訳候補</td>
-            <td class="muted">電子帳簿保存の下地づくり</td>
-          </tr>
-          <tr>
-            <td>運用体制</td>
-            <td>自社入力×毎月巡回監査の二人三脚</td>
-            <td class="muted">リアルタイム70点→申告時100点</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="row" style="margin-top:12px">
-        <button class="btn" onclick="next('mas')">次へ</button>
-        <button class="btn btn-ghost" onclick="back('roles')">← 戻る</button>
-      </div>
-    </section>
-
-    <!-- Section: 継続MAS（新設） -->
-    <section id="mas" class="section card">
-      <h2>継続MAS：未来から逆算する経営計画（簡易デモ付き）</h2>
-      <p>継続MASは、<b>経営者と会計事務所の対話</b>から「あるべき未来像」を定め、<b>年次・月次の計画値</b>を会計ソフトに落とし込み、<b>実績と比較し続ける</b>“経営のペースメーカー”です。</p>
-      <div class="grid cols-2">
-        <div class="card">
-          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe885481aa2a4c5b58e1.png" alt="過去・現在・未来の3視点（制度会計／変動損益／継続MAS）" loading="lazy">
-          <ul>
-            <li>「過去（制度会計）」「現在（変動損益）」「未来（継続MAS）」の<b>3視点で経営</b></li>
-            <li>年間計画→月次計画に<b>ブレークダウン</b>し、<b>実績と差異</b>を毎月レビュー</li>
-            <li>差異要因に応じて、<b>値上げ・販促・コスト・稼働</b>などの打ち手を調整</li>
-          </ul>
-          <img class="hero" src="https://www.matsumoto-kaikei.or.jp/library/5755269ff5eee6e8737f241b/66dcfe88ec0eaa37155316fb.png" alt="黒字決算のための5原則（当事務所サイトより）" loading="lazy">
-        </div>
-        <div class="card">
-          <h3>継続MAS 簡易デモ</h3>
-          <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px">
-            <label>年間売上計画（円）<br><input id="mas_plan_sales" type="number" value="36000000" min="0" step="10000" oninput="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
-            <label>限界利益率（%）<br><input id="mas_plan_cm" type="range" min="30" max="85" step="0.1" value="62.2" oninput="buildMasPlan()" style="width:100%"></label>
-            <label>年間固定費（円）<br><input id="mas_plan_fixed" type="number" value="18000000" min="0" step="10000" oninput="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
-            <label>配賦パターン<br>
-              <select id="mas_pattern" onchange="buildMasPlan()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px">
-                <option value="even">均等（12分割）</option>
-                <option value="season">繁忙・閑散あり</option>
-              </select>
-            </label>
-          </div>
-          <div class="row mini" style="margin:8px 0"><span class="muted">現在の限界利益率：</span><b id="mas_cm_disp">62.2%</b></div>
-          <table class="table" style="margin-top:6px">
-            <thead><tr><th>月</th><th>売上（計画）</th><th>限界利益（計画）</th><th>固定費（月割）</th><th>経常利益（計画）</th></tr></thead>
-            <tbody id="mas_plan_tbody"></tbody>
-          </table>
-          <div class="card" style="margin-top:10px">
-            <h4 style="margin:0 0 6px 0">今月の実績入力</h4>
-            <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px">
-              <label>対象月（1-12）<br><input id="mas_act_month" type="number" min="1" max="12" value="5" oninput="updateMasDemo()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
-              <label>売上実績（円）<br><input id="mas_act_sales" type="number" min="0" step="10000" value="3000000" oninput="updateMasDemo()" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:10px"></label>
-            </div>
-            <div class="row mini" style="margin-top:8px"><span class="muted">前提：変動費は売上に連動（限界利益率は計画と同じ）</span></div>
-            <table class="table" style="margin-top:6px">
-              <thead><tr><th></th><th>売上</th><th>限界利益</th><th>固定費</th><th>経常利益</th></tr></thead>
-              <tbody id="mas_demo_tbody"></tbody>
-            </table>
-            <div id="mas_msg" class="note"></div>
-          </div>
-          <div class="row" style="margin-top:10px">
-            <a class="btn" href="https://takatrp.github.io/hendou_PL/" target="_blank" rel="noopener">ボールで学ぶ変動損益計算書</a>
-            <button class="btn" onclick="next('summary')">次へ →</button>
-          </div>
+      <div class="row" style="margin-top:10px"><button class="btn" onclick="next('summary')">次へ →</button></div>
         </div>
       </div>
     </section>
@@ -345,7 +242,7 @@
         <a href="https://www.matsumoto-kaikei.or.jp/software" target="_blank" rel="noopener">ＴＫＣシステムのメリット</a> ／
         <a href="https://takatrp.github.io/hendou_PL/" target="_blank" rel="noopener">ボールで学ぶ変動損益計算書</a>
       </div>
-      <div>© 松本会計 r4 — このツールは社内デモ用の試作版です。数値は例示であり、最終判断は専門家による個別助言に基づきます。</div>
+      <div>© 松本会計 r5 — このツールは社内デモ用の試作版です。数値は例示であり、最終判断は専門家による個別助言に基づきます。</div>
     </footer>
   </div>
 
@@ -415,32 +312,6 @@
     buildSummary();
   }
 
-  function buildSummary(){
-    // Build a short tailored message
-    const lines = [];
-    if(state.persona){ lines.push(`【前提】現在のご志向：${state.persona}`); }
-    lines.push(`【リアルタイム性】月次は約${state.delayDays}日遅れ。→ まずは自動化で短縮。`);
-    lines.push(`【自動化の方向】推定自動化率：${Math.round(state.auto*100)}%（銀行:${state.bank?'✔':'—'} / 証憑AI:${state.ocr?'✔':'—'} / 連携:${state.sales?'✔':'—'}）`);
-    const need = document.getElementById('needSales').textContent || '—';
-    const per  = document.getElementById('perDay').textContent || '—';
-    const upd   = document.getElementById('unitsPerDay').textContent || '—';
-    const cmTxt = document.getElementById('cmDisp').textContent || '—';
-    lines.push(`【変動損益の示唆】限界利益率 ${cmTxt} 前提で、固定費増分に対する必要売上は ${need} ／日当たり ${per}（単価ベースで ${upd} 件/日）。`);
-    lines.push('【継続MAS】年間/⽉次計画 ↔ 実績を毎月比較し、差異要因に応じて打ち手を調整。');
-    lines.push('【役割分担】自社でリアルタイム70点 → 松本会計の巡回監査で100点へ。');
-    document.getElementById('recText').textContent = lines.join('\n');
-  }
-
-  function copyText(){
-    const el = document.getElementById('recText');
-    const range = document.createRange();
-    range.selectNode(el);
-    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
-    try{ document.execCommand('copy'); }catch(e){}
-    sel.removeAllRanges();
-    alert('内容をコピーしました');
-  }
-
   // 継続MAS：計画表を生成
   function buildMasPlan(){
     const salesY = Number(document.getElementById('mas_plan_sales').value||0);
@@ -496,6 +367,30 @@
       const dvP = prAct - p.pr;
       msgEl.textContent = dvP>=0 ? `◎ 計画比 ${fmtY(dvP)} 上振れ（売上差 ${fmtY(dvS)}）。この調子で進めましょう。` : `△ 計画比 ${fmtY(dvP)} 下振れ（売上差 ${fmtY(dvS)}）。単価・数量・固定費の観点で是正策を検討。`;
     }
+  }
+
+  function buildSummary(){
+    const lines = [];
+    if(state.persona){ lines.push(`【前提】現在のご志向：${state.persona}`); }
+    lines.push(`【リアルタイム性】月次は約${state.delayDays}日遅れ。→ まずは自動化で短縮。`);
+    lines.push(`【自動化の方向】推定自動化率：${Math.round(state.auto*100)}%（銀行:${state.bank?'✔':'—'} / 証憑AI:${state.ocr?'✔':'—'} / 連携:${state.sales?'✔':'—'}）`);
+    const need = document.getElementById('needSales').textContent || '—';
+    const per  = document.getElementById('perDay').textContent || '—';
+    const upd   = document.getElementById('unitsPerDay').textContent || '—';
+    const cmTxt = document.getElementById('cmDisp').textContent || '—';
+    lines.push(`【変動損益の示唆】限界利益率 ${cmTxt} 前提で、固定費増分に対する必要売上は ${need} ／日当たり ${per}（単価ベースで ${upd} 件/日）。`);
+    lines.push('【役割分担】自社でリアルタイム70点 → 松本会計の巡回監査で100点へ。');
+    document.getElementById('recText').textContent = lines.join('\n');
+  }
+
+  function copyText(){
+    const el = document.getElementById('recText');
+    const range = document.createRange();
+    range.selectNode(el);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    try{ document.execCommand('copy'); }catch(e){}
+    sel.removeAllRanges();
+    alert('内容をコピーしました');
   }
 
   // init
